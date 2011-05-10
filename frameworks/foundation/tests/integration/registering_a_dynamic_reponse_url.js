@@ -27,10 +27,10 @@ describe('Scenario: Registering a dynamic reponse URL', function() {
           beforeEach(function() {
             dynamicResponse = function(resourceStore) {
               var items = resourceStore.allOfType('Item');
-              var response = {
+              var body = {
                 items: items
               }
-              return response;
+              return {body:body, status: 200};
             };
           });
 
@@ -51,8 +51,7 @@ describe('Scenario: Registering a dynamic reponse URL', function() {
 
               it('Then I should receive the registered response', function() {
                 var expectedResponse = '{"items": [ {"type": "' + type + '", "title": "' + title + '"} ] }';
-
-                expect(jQuery.parseJSON(response.get('body'))).toEqual(jQuery.parseJSON(expectedResponse));
+                expect(jQuery.parseJSON(response.get('body'))).toEqual(jQuery.parseJSON(expectedResponse));                
               });
             });
           });

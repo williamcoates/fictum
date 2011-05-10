@@ -48,7 +48,7 @@ Fictum = {
           var response = Fictum.responseFor(this.get('address'), {json: this.get('isJSON')});
           response.set('request', this);
           setTimeout(function() {
-            response.set('status', 200);
+            //response.set('status', 200);
             response.notify();
           }, 1);
           return response;

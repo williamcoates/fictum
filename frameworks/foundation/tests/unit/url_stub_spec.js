@@ -94,14 +94,15 @@ describe('Fictum.UrlStub', function() {
   });
 
   describe('#getResponse', function() {
-    var value = 'response value', createSCResponseSpy, expectedResponse, actualResponse, resourceStore;
+    var value = {}, expectedResponse, actualResponse, resourceStore;
 
     beforeEach(function() {
-      expectedResponse = 'something';
-      parsedResponse = {};
-      spyOn(urlStub.get('response'), 'value').andReturn(value);
-      spyOn(jQuery, 'parseJSON').andReturn(parsedResponse);
-      createSCResponseSpy = spyOn(SC.Response, 'create').andReturn(expectedResponse);
+      expectedResponse = SC.Response.create();
+      stringifiedBody = "stringified";
+      spyOn(urlStub.get('response'), 'value').andReturn({body: value});
+      spyOn(JSON, 'stringify').andReturn(stringifiedBody);
+      spyOn(SC.Response, 'create').andReturn(expectedResponse);
+      spyOn(expectedResponse, 'mixin').andCallThrough();
       resourceStore = {};
     });
 
@@ -110,8 +111,8 @@ describe('Fictum.UrlStub', function() {
         actualResponse = urlStub.getResponse(resourceStore);
       });
 
-      it('wraps it\'s response\'s raw value in a SC.Request', function() {
-        expect(createSCResponseSpy).toHaveBeenCalledWith({body: value});
+      it("wraps it's response's raw value in a SC.Request", function() {
+        expect(expectedResponse.mixin).toHaveBeenCalledWith({body: stringifiedBody});
       });
 
       it('gives that response', function() {
@@ -124,8 +125,8 @@ describe('Fictum.UrlStub', function() {
         actualResponse = urlStub.getResponse(resourceStore, {json: true});
       });
 
-      it('wraps it\'s response\'s json value in a SC.Request', function() {
-        expect(createSCResponseSpy).toHaveBeenCalledWith({body: parsedResponse});
+      it("wraps it's response's json value in a SC.Request", function() {
+        expect(expectedResponse.mixin).toHaveBeenCalledWith({body: value});
       });
     });
   });

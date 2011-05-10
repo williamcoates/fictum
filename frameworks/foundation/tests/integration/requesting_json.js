@@ -27,10 +27,10 @@ describe('Scenario: Requesting JSON back', function() {
           beforeEach(function() {
             dynamicResponse = function(resourceStore) {
               var items = resourceStore.allOfType('Item');
-              var response = {
+              var body = {
                 items: items
               }
-              return response;
+              return {body: response, status: 200};
             };
           });
 

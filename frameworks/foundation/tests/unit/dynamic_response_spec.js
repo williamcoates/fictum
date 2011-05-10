@@ -15,7 +15,7 @@ describe('Fictum.DynamicResponse', function() {
     });
 
     it('returns that response', function() {
-      expect(actualResponse).toBe(JSON.stringify(expectedResponse));
+      expect(actualResponse).toBe(expectedResponse);
     });
   });
 });

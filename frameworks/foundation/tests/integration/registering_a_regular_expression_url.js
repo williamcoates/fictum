@@ -17,7 +17,7 @@ describe('Scenario: Registering a regular expression URL', function() {
       describe('And a text response that I want to receive', function() {
         var expectedResponse;
         beforeEach(function() {
-          expectedResponse = 'RETURN THIS';
+          expectedResponse = {body:'RETURN THIS', status: 200};
         });
 
         describe('When I register that URL and response', function() {
@@ -36,7 +36,7 @@ describe('Scenario: Registering a regular expression URL', function() {
             });
 
             it('Then I should receive the registered response', function() {
-              expect(response.get('body')).toBe(expectedResponse);
+              expect(response.get('body')).toBe(expectedResponse['body']);
             });
           });
         });
